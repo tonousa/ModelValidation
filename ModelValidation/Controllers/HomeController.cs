@@ -25,24 +25,24 @@ namespace ModelValidation.Controllers
         [HttpPost]
         public ViewResult MakeBooking(Appointment appt)
         {
-            if (string.IsNullOrEmpty(appt.ClientName))
-            {
-                ModelState.AddModelError("ClientName", "Please enter a name");
-            }
-            if (ModelState.IsValidField("Date") && DateTime.Now > appt.Date)
-            {
-                ModelState.AddModelError("Date", "Please enter a date in the fu");
-            }
-            if (!appt.TermsAccepted)
-	        {
-                ModelState.AddModelError("TermsAccepted", "You must accept the terms");
-	        }
+            //if (string.IsNullOrEmpty(appt.ClientName))
+            //{
+            //    ModelState.AddModelError("ClientName", "Please enter a name");
+            //}
+            //if (ModelState.IsValidField("Date") && DateTime.Now > appt.Date)
+            //{
+            //    ModelState.AddModelError("Date", "Please enter a date in the fu");
+            //}
+            //if (!appt.TermsAccepted)
+            //{
+            //    ModelState.AddModelError("TermsAccepted", "You must accept the terms");
+            //}
 
-            if (ModelState.IsValidField("ClientName") && ModelState.IsValidField("Date") 
-                && appt.ClientName == "Joe" && appt.Date.DayOfWeek == DayOfWeek.Monday)
-            {
-                ModelState.AddModelError("", "Joe cannot book on Mondays");
-            }
+            //if (ModelState.IsValidField("ClientName") && ModelState.IsValidField("Date") 
+            //    && appt.ClientName == "Joe" && appt.Date.DayOfWeek == DayOfWeek.Monday)
+            //{
+            //    ModelState.AddModelError("", "Joe cannot book on Mondays");
+            //}
 
             if (ModelState.IsValid)
             {

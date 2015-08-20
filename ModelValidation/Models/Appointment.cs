@@ -7,6 +7,7 @@ using ModelValidation.Infrastructure;
 
 namespace ModelValidation.Models
 {
+    [NoJoeOnMoondays]
     public class Appointment
     {
         [Required]
