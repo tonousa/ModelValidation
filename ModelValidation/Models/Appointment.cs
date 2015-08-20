@@ -8,7 +8,7 @@ using ModelValidation.Infrastructure;
 namespace ModelValidation.Models
 {
     [NoJoeOnMoondays]
-    public class Appointment
+    public class Appointment : IValidatableObject
     {
         [Required]
         public string ClientName { get; set; }
@@ -19,7 +19,36 @@ namespace ModelValidation.Models
         public DateTime Date { get; set; }
 
         //[Range(typeof(bool), "true", "true", ErrorMessage="You must accept the terms")]
-        [MustBeTrue(ErrorMessage="You must accept the terms")]
+        [MustBeTrue(ErrorMessage = "You must accept the terms (IValidatableObject)")]
         public bool TermsAccepted { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext 
+            validationContext)
+        {
+            List<ValidationResult> errors = new List<ValidationResult>();
+
+            if (string.IsNullOrEmpty(ClientName))
+            {
+                errors.Add(new ValidationResult("Please enter your name"));
+            }
+
+            if (DateTime.Now > Date)
+            {
+                errors.Add(new ValidationResult("Please enter date in future"));
+            }
+
+            if (errors.Count == 0 && ClientName == "Joe" 
+                && Date.DayOfWeek == DayOfWeek.Monday)
+	        {
+                errors.Add(new ValidationResult("Joe cannot book on Mondays"));
+	        }
+
+            if (!TermsAccepted)
+	        {
+		        errors.Add(new ValidationResult("You must accept terms"));
+	        }
+
+            return errors;
+        }
     }
 }
