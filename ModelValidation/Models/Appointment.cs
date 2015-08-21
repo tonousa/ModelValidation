@@ -1,25 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
 using ModelValidation.Infrastructure;
 
 namespace ModelValidation.Models
 {
     [NoJoeOnMoondays]
-    public class Appointment : IValidatableObject
+    //public class Appointment : IValidatableObject
+    public class Appointment
     {
         [Required]
+        [StringLength(10, MinimumLength=3)]
         public string ClientName { get; set; }
 
         //[Required(ErrorMessage="Please enter a date")]
+        //[FutureDate(ErrorMessage="Please enter a date in the future")]
         [DataType(DataType.Date)]
-        [FutureDate(ErrorMessage="Please enter a date in the future")]
+        [Remote("ValidateDate", "Home")]
         public DateTime Date { get; set; }
 
         //[Range(typeof(bool), "true", "true", ErrorMessage="You must accept the terms")]
-        [MustBeTrue(ErrorMessage = "You must accept the terms (IValidatableObject)")]
+        //[MustBeTrue(ErrorMessage = "You must accept the terms (IValidatableObject)")]
         public bool TermsAccepted { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext 
